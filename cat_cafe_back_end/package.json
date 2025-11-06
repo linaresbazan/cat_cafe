@@ -1,0 +1,35 @@
+{
+  "name": "cat_cafe_back_end",
+  "type": "module",
+  "imports": {
+    "#*": "./*.js"
+  },
+  "version": "1.0.0",
+  "description": "Charlie's Cat Cafe back end",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --env-file=.env server.js",
+    "dev": "node --watch --env-file=.env server.js",
+    "debug": "node --inspect --watch --env-file=.env server.js",
+    "test": "vitest",
+    "db:schema": "psql -d market -f db/schema.sql",
+    "db:seed": "node --env-file=.env db/seed.js",
+    "db:reset": "npm run db:schema && npm run db:seed"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.14.1"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^10.1.0",
+    "supertest": "^7.1.0",
+    "vitest": "^3.1.2"
+  },
+  "author": "Angelica Linares",
+  "license": "MIT"
+}
