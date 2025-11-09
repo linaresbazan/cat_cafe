@@ -12,7 +12,7 @@
     "dev": "node --watch --env-file=.env server.js",
     "debug": "node --inspect --watch --env-file=.env server.js",
     "test": "vitest",
-    "db:schema": "psql -d market -f db/schema.sql",
+    "db:schema": "psql -d cat_cafe -f db/schema.sql",
     "db:seed": "node --env-file=.env db/seed.js",
     "db:reset": "npm run db:schema && npm run db:seed"
   },

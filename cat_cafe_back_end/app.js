@@ -1,5 +1,5 @@
 import express from "express";
-// import userRouter from "#api/users";
+import userRouter from "#api/users";
 // import orderRouter from "#api/orders";
 // import productRouter from "#api/products";
 
@@ -22,7 +22,7 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
   res.status(200).send('Welcome to the cat cafe!');
 });
-// app.use('/users', userRouter);
+app.use('/users', userRouter);
 // app.use('/orders', orderRouter);
 // app.use('/products', productRouter);
 
