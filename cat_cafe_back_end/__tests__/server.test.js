@@ -4,21 +4,31 @@ import request from "supertest";
 import { afterAll, beforeAll, describe, expect, it, test } from "vitest";
 
 let token;
-let lastProduct;
+let lastCat;
+let lastMenuItem;
 let orderedProduct;
 
 beforeAll(async () => {
   await db.connect();
   await db.query("BEGIN");
-  //
-  // const {
-  //   rows: [product],
-  // } = await db.query("SELECT * FROM products ORDER BY id DESC");
-  // lastProduct = product;
-  // orderedProduct = {
-  //   productId: product.id,
-  //   quantity: 5,
-  // };
+
+  const {
+    rows: [cat],
+  } = await db.query("SELECT * FROM cats ORDER BY id DESC");
+  lastCat = cat;
+  orderedProduct = {
+    catId: cat.id,
+    quantity: 5,
+  };
+
+  const {
+    rows: [menuItem],
+  } = await db.query("SELECT * FROM menu_items ORDER BY id DESC");
+  lastMenuItem = menuItem;
+  orderedProduct = {
+    menuItemId: menuItem.id,
+    quantity: 5,
+  };
 });
 afterAll(async () => {
   await db.query("ROLLBACK");
@@ -69,31 +79,55 @@ describe("users", () => {
     });
   });
 });
-//
-// describe("products", () => {
-//   test("GET / sends array of all products", async () => {
-//     const { rows: products } = await db.query("SELECT * FROM products");
-//     const response = await request(app).get("/products");
-//     expect(response.status).toBe(200);
-//     expect(response.body).toEqual(products);
-//   });
-//
-//   describe("GET /products/:id", () => {
-//     it("sends 404 if the product does not exist", async () => {
-//       const response = await request(app).get(
-//         "/products/" + (lastProduct.id + 1),
-//       );
-//       expect(response.status).toBe(404);
-//     });
-//
-//     it("sends the specific product", async () => {
-//       const response = await request(app).get("/products/" + lastProduct.id);
-//       expect(response.status).toBe(200);
-//       expect(response.body).toEqual(lastProduct);
-//     });
-//   });
-// });
-//
+
+describe("cats", () => {
+  test("GET / sends array of all cats", async () => {
+    const { rows: cats } = await db.query("SELECT * FROM cats");
+    const response = await request(app).get("/cats");
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(cats);
+  });
+
+  describe("GET /cats/:id", () => {
+    it("sends 404 if the cat does not exist", async () => {
+      const response = await request(app).get(
+        "/cats/" + (lastCat.id + 1),
+      );
+      expect(response.status).toBe(404);
+    });
+
+    it("sends the specific cat", async () => {
+      const response = await request(app).get("/cats/" + lastCat.id);
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(lastCat);
+    });
+  });
+});
+
+describe("menuItems", () => {
+  test("GET / sends array of all menu items", async () => {
+    const { rows: menuItems } = await db.query("SELECT * FROM menu_items");
+    const response = await request(app).get("/menu-items");
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(menuItems);
+  });
+
+  describe("GET /menu-items/:id", () => {
+    it("sends 404 if the menu item does not exist", async () => {
+      const response = await request(app).get(
+        "/menu-items/" + (lastMenuItem.id + 1),
+      );
+      expect(response.status).toBe(404);
+    });
+
+    it("sends the specific menu item", async () => {
+      const response = await request(app).get("/menu-items/" + lastMenuItem.id);
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(lastMenuItem);
+    });
+  });
+});
+
 // describe("orders", () => {
 //   let newOrderId;
 //   let forbiddenOrderId;

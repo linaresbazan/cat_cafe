@@ -21,6 +21,7 @@ CREATE TABLE cats (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     age INT NOT NULL,
+    sex CHAR(1) NOT NULL CHECK (sex IN ('M', 'F')),
     breed TEXT NOT NULL,
     description TEXT NOT NULL
 );
@@ -44,7 +45,7 @@ CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL REFERENCES users(id)
     ON DELETE CASCADE,
-    date DATE NOT NULL
+    date TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE orders_menu_items (

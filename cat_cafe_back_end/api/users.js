@@ -43,7 +43,7 @@ router.get('/:id', async (req, res) => {
   return res.status(200).send(user);
 });
 
-/** Updates a user  */
+/** Updates a user */
 router.put('/:id', requireBody(["password", "firstName", "lastName", "email"]), async (req, res) => {
   const { id } = req.params;
 
