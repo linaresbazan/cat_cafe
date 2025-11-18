@@ -4,7 +4,7 @@ import catRouter from "#api/cats";
 import menuItemsRouter from "#api/menuItems";
 import reservationTypesRouter from "#api/reservationTypes";
 import orderRouter from "#api/orders";
-// import productRouter from "#api/products";
+import reservationRouter from "#api/reservations";
 
 const app = express();
 export default app;
@@ -30,7 +30,7 @@ app.use('/cats', catRouter);
 app.use('/menu-items', menuItemsRouter);
 app.use('/reservation-types', reservationTypesRouter);
 app.use('/orders', orderRouter);
-// app.use('/products', productRouter);
+app.use('/reservations', reservationRouter);
 
 // ### Error-handling middleware
 // Catch-all error-handling middleware

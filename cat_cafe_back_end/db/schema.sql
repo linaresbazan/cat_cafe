@@ -62,7 +62,6 @@ CREATE TABLE reservations (
     ON DELETE CASCADE,
     reservation_type_id INT NOT NULL REFERENCES reservation_types(id)
     ON DELETE CASCADE,
-    time_slot TIMESTAMPTZ NOT NULL,
-    order_id INT REFERENCES orders(id)
-    ON DELETE CASCADE
+    start_time TIMESTAMPTZ NOT NULL,
+    end_time TIMESTAMPTZ NOT NULL
 );

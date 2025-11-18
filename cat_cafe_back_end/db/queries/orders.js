@@ -12,9 +12,9 @@ export async function createOrder({ userId, date }) {
 }
 
 /** @returns orders_menu_items created according to the provided details */
-export async function createOrderMenuItems({ orderId, menuItemId, quantity }) {
+export async function addMenuItemsToOrder({ orderId, menuItemId, quantity }) {
   const sql = `
-    INSERT INTO orders_products (order_id, menu_item_id, quantity) 
+    INSERT INTO orders_menu_items (order_id, menu_item_id, quantity) 
     VALUES ($1, $2, $3) RETURNING *`;
   const values = [orderId, menuItemId, quantity];
   const { rows: orders_menu_items } = await db.query(sql, values);
@@ -52,13 +52,13 @@ export async function getOrderByOrderId({ id }) {
 }
 
 /** @returns all menu_items from an order */
-export async function getOrderMenuItemsByOrderId({ order_id }) {
+export async function getOrderMenuItemsByOrderId({ orderId }) {
   const sql = `
-  SELECT p.*
+  SELECT omi.*, mi.*
   FROM orders_menu_items AS omi
   JOIN menu_items AS mi ON omi.menu_item_id = mi.id
   WHERE omi.order_id = $1`;
-  const values = [order_id];
+  const values = [orderId];
   const { rows: order_menu_items } = await db.query(sql, values);
   return order_menu_items;
 }
