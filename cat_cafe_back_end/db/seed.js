@@ -5,6 +5,8 @@ import { addMenuItem } from "#db/queries/menuItems";
 import { addReservationType } from "#db/queries/reservationTypes";
 import { addMenuItemsToOrder, createOrder } from "#db/queries/orders";
 import menuItems from "#api/menuItems";
+import cats from "#db/data";
+import { addMenuItemType } from "#db/queries/menuItemTypes";
 
 await db.connect();
 await seed();
@@ -20,11 +22,17 @@ async function seed() {
   const user2 = await createUser({ username: "user2", password: "user2", email: "user2@gmail.com", firstName: "User 2", lastName: "User2", isAdmin: false });
   const user3 = await createUser({ username: "user3", password: "user3", email: "user3@gmail.com", firstName: "User 3", lastName: "User3", isAdmin: false });
 
-  // Create Charlie
-  await addCat({ name: "Charlie", age: 12, sex: "M", breed: "DSH", description: "Charlie bon bon" });
+  // Create Cats
+  for (let i = 0; i < cats.length; ++i) {
+    await addCat(cats[i]);
+  }
 
+  // Create Menu Item Types
+  const menuItemTypeCoffee = await addMenuItemType({ menuItemType: "coffee" });
+  const menuItemTypeBakery = await addMenuItemType({ menuItemType: "bakery" });
+  console.log(menuItemTypeBakery);
   // Create Menu Item
-  const menuItem = await addMenuItem({ name: "Glazed Donut", description: "Yummy donut", unitPrice: 2 });
+  const menuItem = await addMenuItem({ name: "Glazed Donut", description: "Yummy donut", unitPrice: 2, type_id: menuItemTypeBakery.id });
 
   // Create Reservation Types
   await addReservationType({ type: "60-Minute Kitten Session", description: "60 Minute Kitten Session", cost: 15, timeLength: 60 });

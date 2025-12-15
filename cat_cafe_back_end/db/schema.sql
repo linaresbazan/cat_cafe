@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS reservations;
 DROP TABLE IF EXISTS orders_menu_items;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS menu_items;
+DROP TABLE IF EXISTS menu_item_types;
 DROP TABLE IF EXISTS reservation_types;
 DROP TABLE IF EXISTS cats;
 DROP TABLE IF EXISTS users;
@@ -23,7 +24,8 @@ CREATE TABLE cats (
     age INT NOT NULL,
     sex CHAR(1) NOT NULL CHECK (sex IN ('M', 'F')),
     breed TEXT NOT NULL,
-    description TEXT NOT NULL
+    description TEXT NOT NULL,
+    image_url TEXT
 );
 
 CREATE TABLE reservation_types (
@@ -34,11 +36,20 @@ CREATE TABLE reservation_types (
     time_length INT NOT NULL
 );
 
+CREATE TABLE menu_item_types (
+     id SERIAL PRIMARY KEY,
+     type TEXT UNIQUE NOT NULL
+);
+
 CREATE TABLE menu_items (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
+    type_id INT NOT NULL REFERENCES menu_item_types(id),
     description TEXT NOT NULL,
-    unit_price DECIMAL(4, 2) NOT NULL
+    unit_price DECIMAL(4, 2) NOT NULL,
+    image_url TEXT,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE orders (

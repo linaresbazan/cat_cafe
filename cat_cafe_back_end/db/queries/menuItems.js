@@ -2,11 +2,11 @@
 import db from "#db/client";
 
 /** @returns a menu_item according to the provided details */
-export async function addMenuItem({ name, description, unitPrice }) {
+export async function addMenuItem({ name, description, unitPrice, type_id }) {
   const sql = `
-    INSERT INTO menu_items (name, description, unit_price) 
-    VALUES ($1, $2, $3) RETURNING *`;
-  const values = [name,description, unitPrice];
+    INSERT INTO menu_items (name, description, unit_price, type_id) 
+    VALUES ($1, $2, $3, $4) RETURNING *`;
+  const values = [name, description, unitPrice, type_id];
   const { rows: menu_items } = await db.query(sql, values);
   return menu_items[0];
 }
@@ -35,11 +35,12 @@ export async function getMenuItem({ id }) {
    * @returns undefined if menu_item with the given id does not exist
    */
 export async function updateMenuItem({id, name, description, unitPrice }) {
+  const updatedAt = Date.now();
   const sql = `UPDATE menu_items
-  SET name = $2, description = $3, unit_price = $4,
+  SET name = $2, description = $3, unit_price = $4, updated_at = $5,
   WHERE id = $1
   RETURNING *`;
-  const values = [ id, name, description, unitPrice ];
+  const values = [ id, name, description, unitPrice, updatedAt ];
   const { rows: menu_items } = await db.query(sql, values);
   if (!menu_items) return undefined;
   return menu_items[0];
