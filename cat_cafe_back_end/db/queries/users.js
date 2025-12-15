@@ -3,12 +3,12 @@ import db from "#db/client";
 import bcrypt from "bcrypt";
 
 /** @returns a user created according to the provided details */
-export async function createUser({ username, password, firstName, lastName, email, isAdmin }) {
+export async function createUser({ username, password, firstName, lastName, phone, email, isAdmin }) {
   const sql = `
-    INSERT INTO users (username, password, first_name, last_name, email, is_admin)
-    VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
+    INSERT INTO users (username, password, first_name, last_name, phone, email, is_admin)
+    VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
   const hashedPassword = await bcrypt.hash(password, 10);
-  const values = [username, hashedPassword, firstName, lastName, email, isAdmin];
+  const values = [username, hashedPassword, firstName, lastName, phone, email, isAdmin];
   const { rows: user } = await db.query(sql, values);
   return user[0];
 }

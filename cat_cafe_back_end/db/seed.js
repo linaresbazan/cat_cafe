@@ -16,11 +16,11 @@ console.log("🌱 Database seeded.");
 async function seed() {
   // TODO - fill in seed function
   // Create admin user
-  await createUser({ username: "admin", password: "admin", email: "admin@gmail.com", firstName: "admin", lastName: "admin", isAdmin: true });
+  await createUser({ username: "admin", password: "admin", phone: "888-555-1234", email: "admin@gmail.com", firstName: "admin", lastName: "admin", isAdmin: true });
 
   // Create regular users
-  const user2 = await createUser({ username: "user2", password: "user2", email: "user2@gmail.com", firstName: "User 2", lastName: "User2", isAdmin: false });
-  const user3 = await createUser({ username: "user3", password: "user3", email: "user3@gmail.com", firstName: "User 3", lastName: "User3", isAdmin: false });
+  const user2 = await createUser({ username: "user2", password: "user2", phone: "888-555-2345", email: "user2@gmail.com", firstName: "User 2", lastName: "User2", isAdmin: false });
+  const user3 = await createUser({ username: "user3", password: "user3", phone: "888-555-3456", email: "user3@gmail.com", firstName: "User 3", lastName: "User3", isAdmin: false });
 
   // Create Cats
   for (let i = 0; i < cats.length; ++i) {

@@ -9,10 +9,10 @@ const router = express.Router();
 export default router;
 
 /** Registers a new user and returns a token */
-router.post("/register", requireBody(["username", "password", "firstName", "lastName", "email"]), async (req, res) => {
-  const { username, password, firstName, lastName, email } = req.body;
+router.post("/register", requireBody(["username", "password", "firstName", "lastName", "phone", "email"]), async (req, res) => {
+  const { username, password, firstName, lastName, phone, email } = req.body;
 
-  const user = await createUser({ username, password, firstName, lastName, email });
+  const user = await createUser({ username, password, firstName, lastName, phone, email });
 
   const token = createToken(user);
 
